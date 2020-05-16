@@ -24,6 +24,7 @@ let datosBusqueda = {
 //Variables
 const autos = obtenerAutos();
 const marca = document.querySelector('#marca');
+const year = document.querySelector('#year');
 
 
 //Event Listeners
@@ -40,6 +41,14 @@ marca.addEventListener('input',e => {
     filtrarAuto();
 });
 
+//Seleccionar el input Año del formulario
+year.addEventListener('input',e => {
+    //Ponemos Number() porque hay valores de año almacenados como números y otros como string.
+    datosBusqueda.year = Number(e.target.value);// con arrow function se usa 'e.target' en vez the 'this'
+    //Llamar la función de filtrar autos
+    filtrarAuto();
+});
+
 //Mostrar autos en el DOM
 document.addEventListener('DOMContentLoaded',() => {
     mostrarAutos(autos);
@@ -51,7 +60,13 @@ document.addEventListener('DOMContentLoaded',() => {
 //Mostrar autos en el DOM
 function mostrarAutos(autos) {
     const contenedor = document.querySelector('#resultado');
+     
+    //Limpiar los resultados anteriores
+    while(contenedor.firstChild) {
+        contenedor.removeChild(contenedor.firstChild);
+    }
 
+    //Construir el HTML de los autos
     autos.forEach(auto => {
         //console.log(auto);
         const autoHTML = document.createElement('p');
@@ -68,22 +83,35 @@ function mostrarAutos(autos) {
 //Filtrar los autos usando Higher Order Functions
 //(es una función que toma otra función como argumento)
 function filtrarAuto() {
-    const resultado = obtenerAutos().filter(filtraMarca);
-    console.log(resultado)
+    const resultado = obtenerAutos().filter(filtrarMarca).filter(filtrarYear);
+    //console.log(resultado)
+    //Mostrar el filtrado en el HTML
+    if(resultado.length) {
+        mostrarAutos(resultado);
+    } else {
+        alert('No hay resultados');
+    }
 }
 
-
 //Filtrar por Marca
-function filtraMarca(auto) {
+function filtrarMarca(auto) {
     if(datosBusqueda.marca) {
         //console.log(auto);
         //console.log(datosBusqueda.marca);
         return auto.marca === datosBusqueda.marca;
     } else {
-
+        return auto;
     }
 }
 
+//Filtrar por Año
+function filtrarYear(auto) {
+    if(datosBusqueda.year) {
+        return auto.year === datosBusqueda.year;
+    } else {
+        return auto;
+    }
+}
 
 //Obtener los datos de los autos
 function obtenerAutos() {
