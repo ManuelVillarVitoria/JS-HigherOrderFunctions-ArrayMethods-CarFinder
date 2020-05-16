@@ -2,7 +2,7 @@
 
 _The project consists of doing the following:_
 
-_1.- Filter results and display them through a car finder form with the following array methods:_
+_1.-Iterating the array of cars and displaying the results in the console of the "index.html" template, from the examples of filtering the array objects. For this, the following array methods will be used:_
 
 _- .forEach()._
 
@@ -16,7 +16,17 @@ _- .reduce()._
 
 _- .some()._
 
-_All this dynamically through Javascript using DOM._
+
+_2.-Displaying the array's cars with all their propierties in the HTML ,of the "buscador.html" template._
+
+_3.-Selecting the form inputs for the filtering._
+
+_4.-Displaying the cars filtered by brand, by year, minimum and maximum price, doors,transmissions and by colour in the HTML._
+
+_5.-Displaying the alert message in the HTML._
+
+
+_All this dynamically through Javascript using DOM and functional programming with Higher Order Functions._
 
 ### Settings 🔧
 
