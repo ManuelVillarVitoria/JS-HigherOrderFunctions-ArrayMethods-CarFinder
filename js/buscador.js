@@ -35,7 +35,9 @@ const marca = document.querySelector('#marca');
 marca.addEventListener('input',e => {
     //console.log('algo cambio');
     datosBusqueda.marca = e.target.value;// con arrow function se usa 'e.target' en vez the 'this'
-    console.log(datosBusqueda)
+    //console.log(datosBusqueda)
+    //Llamar la función de filtrar autos
+    filtrarAuto();
 });
 
 //Mostrar autos en el DOM
@@ -61,6 +63,27 @@ function mostrarAutos(autos) {
         contenedor.appendChild(autoHTML);
     })
 }
+
+
+//Filtrar los autos usando Higher Order Functions
+//(es una función que toma otra función como argumento)
+function filtrarAuto() {
+    const resultado = obtenerAutos().filter(filtraMarca);
+    console.log(resultado)
+}
+
+
+//Filtrar por Marca
+function filtraMarca(auto) {
+    if(datosBusqueda.marca) {
+        //console.log(auto);
+        //console.log(datosBusqueda.marca);
+        return auto.marca === datosBusqueda.marca;
+    } else {
+
+    }
+}
+
 
 //Obtener los datos de los autos
 function obtenerAutos() {
