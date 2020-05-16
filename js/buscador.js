@@ -10,6 +10,59 @@ for(let i = max; i >  min; i--) {
     document.querySelector('#year').appendChild(option);
 }
 
+//Datos para la búsqueda
+let datosBusqueda = {
+    marca: '',
+    year: '',
+    minimo: '',
+    maximo: '',
+    puertas: '',
+    transmision: '',
+    color: ''
+}
+
+//Variables
+const autos = obtenerAutos();
+const marca = document.querySelector('#marca');
+
+
+//Event Listeners
+
+//Seleccionar el input Marca del formulario
+//marca.addEventListener('input',function(e){
+    //console.log('algo cambio');
+    //datosBusqueda.marca = this.value;
+marca.addEventListener('input',e => {
+    //console.log('algo cambio');
+    datosBusqueda.marca = e.target.value;// con arrow function se usa 'e.target' en vez the 'this'
+    console.log(datosBusqueda)
+});
+
+//Mostrar autos en el DOM
+document.addEventListener('DOMContentLoaded',() => {
+    mostrarAutos(autos);
+});
+
+
+//Funciones
+
+//Mostrar autos en el DOM
+function mostrarAutos(autos) {
+    const contenedor = document.querySelector('#resultado');
+
+    autos.forEach(auto => {
+        //console.log(auto);
+        const autoHTML = document.createElement('p');
+        autoHTML.innerHTML = `
+            <p>${auto.marca} ${auto.modelo} - ${auto.year} - ${auto.puertas} Puertas -
+             Transmisión: ${auto.transmision} - Precio: ${auto.precio} - Color: ${auto.color} 
+            </p>
+        `;
+        contenedor.appendChild(autoHTML);
+    })
+}
+
+//Obtener los datos de los autos
 function obtenerAutos() {
     return [
         {
@@ -138,25 +191,3 @@ function obtenerAutos() {
     ];
 
 };
-
-//Event Listener
-const autos = obtenerAutos();
-
-document.addEventListener('DOMContentLoaded',() => {
-    mostrarAutos(autos);
-});
-
-function mostrarAutos(autos) {
-    const contenedor = document.querySelector('#resultado');
-
-    autos.forEach(auto => {
-        //console.log(auto);
-        const autoHTML = document.createElement('p');
-        autoHTML.innerHTML = `
-            <p>${auto.marca} ${auto.modelo} - ${auto.year} - ${auto.puertas} Puertas -
-             Transmisión: ${auto.transmision} - Precio: ${auto.precio} - Color: ${auto.color} 
-            </p>
-        `;
-        contenedor.appendChild(autoHTML);
-    })
-}
