@@ -99,15 +99,21 @@ document.addEventListener('DOMContentLoaded',() => {
 
 //Funciones
 
+//Limpiar los resultados anteriores
+function limpiarHTML() {
+    const contenedor = document.querySelector('#resultado');
+
+    while(contenedor.firstChild) {
+       contenedor.removeChild(contenedor.firstChild);
+    }
+}
+ 
 //Mostrar autos en el DOM
 function mostrarAutos(autos) {
-    const contenedor = document.querySelector('#resultado');
-     
-    //Limpiar los resultados anteriores
-    while(contenedor.firstChild) {
-        contenedor.removeChild(contenedor.firstChild);
-    }
+    limpiarHTML();
 
+    const contenedor = document.querySelector('#resultado');
+    
     //Construir el HTML de los autos
     autos.forEach(auto => {
         //console.log(auto);
@@ -121,6 +127,15 @@ function mostrarAutos(autos) {
     })
 }
 
+//Mostrar mensaje alerta cuando no hay resultado en el filtrado
+function noResultado() {
+    limpiarHTML();
+
+    const noResultado = document.createElement('div');
+    noResultado.classList.add('alerta','error');
+    noResultado.appendChild(document.createTextNode('No hay Resultados'));
+    document.querySelector('#resultado').appendChild(noResultado);
+}
 
 //Filtrar los autos usando Higher Order Functions
 //(es una función que toma otra función como argumento)
@@ -133,7 +148,7 @@ function filtrarAuto() {
     if(resultado.length) {
         mostrarAutos(resultado);
     } else {
-        alert('No hay resultados');
+        noResultado();
     }
 }
 
