@@ -25,6 +25,12 @@ let datosBusqueda = {
 const autos = obtenerAutos();
 const marca = document.querySelector('#marca');
 const year = document.querySelector('#year');
+const minimo = document.querySelector('#minimo');
+const maximo = document.querySelector('#maximo');
+const puertas = document.querySelector('#puertas');
+const transmision = document.querySelector('#transmision');
+const color = document.querySelector('#color');
+
 
 
 //Event Listeners
@@ -44,13 +50,49 @@ marca.addEventListener('input',e => {
 //Seleccionar el input Año del formulario
 year.addEventListener('input',e => {
     //Ponemos Number() porque hay valores de año almacenados como números y otros como string.
-    datosBusqueda.year = Number(e.target.value);// con arrow function se usa 'e.target' en vez the 'this'
+    datosBusqueda.year = Number(e.target.value);
+    //Llamar la función de filtrar autos
+    filtrarAuto();
+});
+
+//Seleccionar el input Precio Min del formulario
+minimo.addEventListener('input',e => {
+    datosBusqueda.minimo = Number(e.target.value);
+    //Llamar la función de filtrar autos
+    filtrarAuto();
+});
+
+//Seleccionar el input Precio Max del formulario
+maximo.addEventListener('input',e => {
+    datosBusqueda.maximo = Number(e.target.value);
+    //Llamar la función de filtrar autos
+    filtrarAuto();
+});
+
+//Seleccionar el input Puertas del formulario
+puertas.addEventListener('input',e => {
+    datosBusqueda.puertas = Number(e.target.value);
+    //Llamar la función de filtrar autos
+    filtrarAuto();
+});
+
+//Seleccionar el input Transmision del formulario
+transmision.addEventListener('input',e => {
+    datosBusqueda.transmision = e.target.value;
+    //Llamar la función de filtrar autos
+    filtrarAuto();
+});
+
+//Seleccionar el input Color del formulario
+color.addEventListener('input',e => {
+    datosBusqueda.color = e.target.value;
     //Llamar la función de filtrar autos
     filtrarAuto();
 });
 
 //Mostrar autos en el DOM
 document.addEventListener('DOMContentLoaded',() => {
+    //console.log(datosBusqueda)
     mostrarAutos(autos);
 });
 
@@ -83,7 +125,9 @@ function mostrarAutos(autos) {
 //Filtrar los autos usando Higher Order Functions
 //(es una función que toma otra función como argumento)
 function filtrarAuto() {
-    const resultado = obtenerAutos().filter(filtrarMarca).filter(filtrarYear);
+    const resultado = obtenerAutos().filter(filtrarMarca).filter(filtrarYear)
+    .filter(filtrarMinimo).filter(filtrarMaximo).filter(filtrarPuertas)
+    .filter(filtrarTransmision).filter(filtrarColor);
     //console.log(resultado)
     //Mostrar el filtrado en el HTML
     if(resultado.length) {
@@ -108,6 +152,52 @@ function filtrarMarca(auto) {
 function filtrarYear(auto) {
     if(datosBusqueda.year) {
         return auto.year === datosBusqueda.year;
+    } else {
+        return auto;
+    }
+}
+
+//Filtrar por Precio Minimo
+function filtrarMinimo(auto) {
+    if(datosBusqueda.minimo) {
+        return auto.precio >= datosBusqueda.minimo;
+    } else {
+        return auto;
+    }
+}
+
+//Filtrar por Precio Maximo
+function filtrarMaximo(auto) {
+    if(datosBusqueda.maximo) {
+        return auto.precio <= datosBusqueda.maximo;
+    } else {
+        return auto;
+    }
+}
+
+//Filtrar por Puertas
+function filtrarPuertas(auto) {
+    if(datosBusqueda.puertas) {
+        return auto.puertas === datosBusqueda.puertas;
+    } else {
+        return auto;
+    }
+}
+
+
+//Filtrar por Transmision
+function filtrarTransmision(auto) {
+    if(datosBusqueda.transmision) {
+        return auto.transmision === datosBusqueda.transmision;
+    } else {
+        return auto;
+    }
+}
+
+//Filtrar por Color
+function filtrarColor(auto) {
+    if(datosBusqueda.color) {
+        return auto.color === datosBusqueda.color;
     } else {
         return auto;
     }
