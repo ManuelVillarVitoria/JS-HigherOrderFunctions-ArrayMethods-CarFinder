@@ -124,17 +124,127 @@ const autos = [
 	{ marca: 'Audi', modelo: 'A4', year: 2016, precio: 30000, puertas: 4, color: 'Azul', transmision: 'automatico' }
 ];
 
-
-// forEach
-
-// map
-
-// filter
-
-// find
-
-// reduce
-
-// some
+console.table(autos);
 
 
+/*  EXPLICACIÓN DE LOS ARRAY METHODS.
+
+1.-.forEach() es útil para listar todos los elementos de un array, pero no crea un nuevo array.
+
+2.-.map() es útil para listar todos los elementos de un array, creando un nuevo array.
+
+3.-.filter() crea un nuevo array basado en una condición que es evaluada, y si cumnple la condición,retorna 
+    todos los elementos que cumplen dicha condición.
+
+4.-.find() crea un nuevo array basado en una condición que es evaluada, y si cumnple la condición,retorna solo 
+	el primer elemento que encuentre del array que cumpla la condición.
+	
+5.-.reduce() toma todos los valores del array y retorna un valor único.
+
+6.-.some() recorre todos los valores del array y retorna true o false en función de si se cumple o no la condición.
+*/
+
+/**********************************************
+ * EJEMPLOS CON LOS ARRAY METHODS
+**********************************************/
+
+/**********************************************
+ * Mostramos todos los automoviles.
+**********************************************/
+
+//De forma vieja
+for(let i = 0; i < autos.length; i++) {
+	//console.log(autos[i])
+}
+
+//Con forEach
+autos.forEach(auto => console.log(auto));
+
+/**********************************************
+ * Mostramos solo los coches de color rojo.
+**********************************************/
+
+//De forma vieja
+for(let i = 0; i < autos.length; i++) {
+	if(autos[i].color === 'Rojo') {
+		//console.log(autos[i])
+	}
+}
+
+
+//Con forEach (es mejor utilizar .filter() en este caso)
+let resultado = [];
+autos.forEach(auto => {
+	if(auto.color === 'Rojo') {
+		resultado.push(auto);
+	}
+});
+//console.log(resultado);
+
+
+//Con filter
+/*
+let resultado2 = autos.filter(auto => {
+	return auto.color  === 'Rojo';
+})
+*/
+let resultado2 = autos.filter(auto => auto.color === 'Rojo');
+console.log(resultado2);
+
+/*******************************************************************
+ * Mostramos todos los automoviles y los mostramos en un nuevo array.
+********************************************************************/
+
+//Con forEach no se puede hacer porque no retorna un nuevo array
+/*
+let resultado1 = autos.forEach(auto => {
+	return auto;
+});
+console.log(resultado1); // undefined
+*/
+
+//Con map
+/*
+let resultado1 = autos.map(auto => {
+	return auto;
+});
+*/
+let resultado1 = autos.map(auto => auto);
+console.log(resultado1);
+
+/*******************************************************************
+ * Mostramos todos los automoviles a partir del 2016 de la marca BMW .
+********************************************************************/
+
+//Usando filter
+let resultado3 = autos.filter(auto => auto.year >= 2016 && auto.marca ==='BMW');
+console.log(resultado3);
+
+
+/***************************************************************
+ * Mostrar el primer Mustang que se encuentre en el array.
+***************************************************************/
+
+//Usando find
+let resultado4 = autos.find(auto => auto.modelo ==='Mustang');
+console.log(resultado4);
+
+
+/***************************************************************
+ * Mostrar el precio total si vendieramos todos los automóviles
+***************************************************************/
+
+//Usando reduce
+//'total' es el primer valor donde se van sumando los precios del resto de autos, 
+//a medida que .reduce() va iterando el array. Inicializamos el resultado final con valor 0.
+let resultado5 = autos.reduce((total, auto) => total + auto.precio, 0);
+console.log(resultado5);//910000
+
+
+/**************************************************************************
+ * Mostrar si hay o no hay autos Ferrari de más de 1.000.000 € en el array.
+***************************************************************************/
+
+//Usando some
+let resultado6 = autos.some(auto => auto.precio > 1000000 && auto.marca ==='Ferrari');
+console.log(resultado6); //false
